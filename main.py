@@ -1,5 +1,5 @@
 import streamlit as st
-#from joblib import load
+from joblib import load
 
 st.title("Deploying the model")
 LABELS = ["setosa","versicolor","virgnica"]

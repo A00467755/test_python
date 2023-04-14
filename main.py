@@ -1,38 +1,24 @@
 import streamlit as st
-from sklearn.datasets import *
-from sklearn.tree import DecisionTreeClassifier
-from dtreeviz import dtreeviz
-import base64
+from joblib import load
 
-def decisionTreeViz():
-    classifier = DecisionTreeClassifier(max_depth=3)  
-    iris = load_iris()
-    classifier.fit(iris.data, iris.target)
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-    viz = dtreeviz(classifier,
-                iris.data,
-                iris.target,
-                target_name='variety',
-                feature_names=iris.feature_names,
-                class_names=["setosa","versicolor","virginica"]  # need class_names for classifier
-                )
-    return viz
 
-def svg_write(svg, center=True):
-    """
-    Disable center to left-margin align like other objects.
-    """
-    # Encode as base 64
-    b64 = base64.b64encode(svg.encode("utf-8")).decode("utf-8")
 
-    # Add some CSS on top
-    css_justify = "center" if center else "left"
-    css = f'<p style="text-align:center; display: flex; justify-content: {css_justify};">'
-    html = f'{css}<img src="data:image/svg+xml;base64,{b64}"/>'
+st.title("Deploying the model")
+LABELS = ["setosa","versicolor","virgnica"]
 
-    # Write the HTML
-    st.write(html, unsafe_allow_html=True)
+clf = load("DT.joblib")
 
-viz=decisionTreeViz()
-svg=viz.svg()
-svg_write(svg)
+sp_l = st.slider("sepal length (cm)", min_value = 0, max_value = 10)
+sp_w = st.slider("sepal width (cm)", min_value = 0, max_value = 10)
+
+pe_l = st.slider("petal length (cm)", min_value = 0, max_value = 10)
+pe_w = st.slider("petal width (cm)", min_value = 0, max_value = 10)
+
+prediction = clf.predict([[sp_l,sp_w,pe_l,pe_w]])
+
+st.write(LABELS[prediction[0]])
+

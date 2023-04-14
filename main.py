@@ -4,7 +4,8 @@ from joblib import load
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn import tree
+
+from sklearn.tree import DecisionTreeClassifier
 from dtreeviz.trees import dtreeviz
 import graphviz as graphviz
 
@@ -39,7 +40,7 @@ train_X, test_X, train_y, test_y = train_test_split(X,
                                                     y, 
                                                     test_size=0.2,
                                                     random_state=44)
-clf = tree.DecisionTreeClassifier()
+clf = DecisionTreeClassifier()
 clf = clf.fit(train_X, train_y)
 
 # Predict test data set
@@ -58,4 +59,5 @@ print(data["target_names"][pred_y])
 viz= dtreeviz(clf, X, y, target_name="Classes",
     feature_names=["f0", "f1"], class_names=["c0", "c1"])
 st.graphviz_chart(viz)
+
 

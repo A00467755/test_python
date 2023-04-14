@@ -5,7 +5,8 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn import tree
-from joblib import dump
+from dtreeviz.trees import dtreeviz
+import graphviz as graphviz
 
 
 st.title("Deploying the model")
@@ -53,8 +54,8 @@ print(accuracy_train)
 
 print(data["target_names"][pred_y])
 
-#dump(clf,"DT.joblib")
-st.plot_tree(clf, filled=True)
 
-
+viz= dtreeviz(clf, X, y, target_name="Classes",
+    feature_names=["f0", "f1"], class_names=["c0", "c1"])
+st.graphviz_chart(viz)
 

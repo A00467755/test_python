@@ -54,7 +54,7 @@ print(accuracy_train)
 print(data["target_names"][pred_y])
 
 #dump(clf,"DT.joblib")
-tree.plot_tree(clf, filled=True)
+st.plot_tree(clf, filled=True)
 
 
 

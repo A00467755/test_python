@@ -56,8 +56,7 @@ print(accuracy_train)
 print(data["target_names"][pred_y])
 
 
-viz= dtreeviz(clf, X, y, target_name="Classes",
-    feature_names=["f0", "f1"], class_names=["c0", "c1"])
+viz= dtreeviz(clf, X, y)
 st.graphviz_chart(viz)
 
 

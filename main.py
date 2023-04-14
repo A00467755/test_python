@@ -1,65 +1,38 @@
 import streamlit as st
-from joblib import load
-
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-
+from sklearn.datasets import *
 from sklearn.tree import DecisionTreeClassifier
-from dtreeviz import dtreeviz
-import graphviz as graphviz
+from dtreeviz.trees import dtreeviz
+import base64
 
+def decisionTreeViz():
+    classifier = DecisionTreeClassifier(max_depth=3)  
+    iris = load_iris()
+    classifier.fit(iris.data, iris.target)
 
-st.title("Deploying the model")
-LABELS = ["setosa","versicolor","virgnica"]
+    viz = dtreeviz(classifier,
+                iris.data,
+                iris.target,
+                target_name='variety',
+                feature_names=iris.feature_names,
+                class_names=["setosa","versicolor","virginica"]  # need class_names for classifier
+                )
+    return viz
 
-clf = load("DT.joblib")
+def svg_write(svg, center=True):
+    """
+    Disable center to left-margin align like other objects.
+    """
+    # Encode as base 64
+    b64 = base64.b64encode(svg.encode("utf-8")).decode("utf-8")
 
-sp_l = st.slider("sepal length (cm)", min_value = 0, max_value = 10)
-sp_w = st.slider("sepal width (cm)", min_value = 0, max_value = 10)
+    # Add some CSS on top
+    css_justify = "center" if center else "left"
+    css = f'<p style="text-align:center; display: flex; justify-content: {css_justify};">'
+    html = f'{css}<img src="data:image/svg+xml;base64,{b64}"/>'
 
-pe_l = st.slider("petal length (cm)", min_value = 0, max_value = 10)
-pe_w = st.slider("petal width (cm)", min_value = 0, max_value = 10)
+    # Write the HTML
+    st.write(html, unsafe_allow_html=True)
 
-prediction = clf.predict([[sp_l,sp_w,pe_l,pe_w]])
-
-st.write(LABELS[prediction[0]])
-
-
-
-
-
-
-
-data = load_iris()
-
-X = data["data"]
-y = data["target"]
-
-train_X, test_X, train_y, test_y = train_test_split(X, 
-                                                    y, 
-                                                    test_size=0.2,
-                                                    random_state=44)
-clf = DecisionTreeClassifier()
-clf = clf.fit(train_X, train_y)
-
-# Predict test data set
-pred_y = clf.predict(test_X)
-accuracy = accuracy_score(test_y, pred_y)
-print(accuracy)
-
-# Predict train data set
-pred_y_train = clf.predict(train_X)
-accuracy_train = accuracy_score(train_y, pred_y_train)
-print(accuracy_train)
-
-print(data["target_names"][pred_y])
-
-
-viz = dtreeviz(clf, 
-               train_X,
-               train_y,
-               target_name="Classes",feature_names=["f0", "f1"], class_names=["c0", "c1"])
-
-viz.view()
-
+viz=decisionTreeViz()
+svg=viz.svg()
+svg_write(svg)

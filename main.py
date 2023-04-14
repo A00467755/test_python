@@ -1,7 +1,7 @@
 import streamlit as st
 from sklearn.datasets import *
 from sklearn.tree import DecisionTreeClassifier
-from dtreeviz.trees import dtreeviz
+from dtreeviz import dtreeviz
 import base64
 
 def decisionTreeViz():

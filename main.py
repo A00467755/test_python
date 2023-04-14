@@ -56,10 +56,10 @@ print(accuracy_train)
 print(data["target_names"][pred_y])
 
 
-viz = dtreeviz.model(clf, 
+viz = dtreeviz(clf, 
                train_X,
                train_y,
-               target_name='class')
+               target_name="Classes",feature_names=["f0", "f1"], class_names=["c0", "c1"]),800)
 
 viz.view()
 

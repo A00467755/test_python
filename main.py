@@ -56,7 +56,11 @@ print(accuracy_train)
 print(data["target_names"][pred_y])
 
 
-viz= dtreeviz(clf, X, y)
-st.graphviz_chart(viz)
-
+viz = dtreeviz(clf, 
+               x_data=train_X,
+               y_data=train_y,
+               target_name='class',
+               feature_names=iris.feature_names, 
+               class_names=list(iris.target_names), 
+               title="Decision Tree - Iris data set")
 

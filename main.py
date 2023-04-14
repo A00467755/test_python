@@ -59,7 +59,7 @@ print(data["target_names"][pred_y])
 viz = dtreeviz(clf, 
                train_X,
                train_y,
-               target_name="Classes",feature_names=["f0", "f1"], class_names=["c0", "c1"]),800)
+               target_name="Classes",feature_names=["f0", "f1"], class_names=["c0", "c1"])
 
 viz.view()
 

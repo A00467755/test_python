@@ -57,8 +57,8 @@ print(data["target_names"][pred_y])
 
 
 viz = dtreeviz(clf, 
-               x_data=train_X,
-               y_data=train_y,
+               train_X,
+               train_y,
                target_name='class',
                feature_names=data.feature_names, 
                class_names=list(data.target_names), 

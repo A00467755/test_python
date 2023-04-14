@@ -60,7 +60,7 @@ viz = dtreeviz(clf,
                x_data=train_X,
                y_data=train_y,
                target_name='class',
-               feature_names=iris.feature_names, 
-               class_names=list(iris.target_names), 
+               feature_names=data.feature_names, 
+               class_names=list(data.target_names), 
                title="Decision Tree - Iris data set")
 

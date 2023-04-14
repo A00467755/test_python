@@ -56,11 +56,10 @@ print(accuracy_train)
 print(data["target_names"][pred_y])
 
 
-viz = dtreeviz(clf, 
+viz = dtreeviz.model(clf, 
                train_X,
                train_y,
-               target_name='class',
-               feature_names=data.feature_names, 
-               class_names=list(data.target_names), 
-               title="Decision Tree - Iris data set")
+               target_name='class')
+
+viz.view()
 
